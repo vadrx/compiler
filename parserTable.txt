@@ -1,0 +1,14 @@
+#################################
+####      PARSER  TABLE      ####
+#################################
+
+pop (top)	emptyNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitAndEx1Nt
+pop (top)	bitAndEx1Nt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	bitOrEx1Nt
+push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitAndEx1Nt
+push (last)	bitAndEx1Nt
+pop (top)	bitAndEx1Nt	 push (next)	bitOrExNt
+push (last)	bitOrExNt
+push (last)	bitOrExNt

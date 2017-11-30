@@ -1,0 +1,13 @@
+################################
+####      LEXER  TABLE      ####
+################################
+
+CLASS|STR|  TYPE LEX  | LEXEME
+--------------------------------
+#3  | 1  | Number     | 1
+#9  | 1  | Bitwise1    | &
+#10 | 1  | Identifier | b
+#9  | 1  | Bitwise2    | |
+#10 | 1  | Identifier | a
+#9  | 1  | Bitwise1    | &
+#10 | 1  | Identifier | b
