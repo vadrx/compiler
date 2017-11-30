@@ -37,6 +37,9 @@ enum tokenType {
   //Bitwise Opretators
   bit1, //&
   bit2, //|
+  //Arifm Opretators
+  log1, //&&
+  log2, //||
   //Separators
   semiCol,      // ;
   leftParent,   // (
@@ -46,19 +49,22 @@ enum tokenType {
   //countTokenTypes, (21)
 
   //Non Terms:  (For Parser)
-  emptyNt,    exprNt, eqExNt, //numbNt, idNt,
-  logOrExNt,  logOrEx1Nt,   logOrEx2Nt,
-  logAndExNt, logAndEx1Nt,  logAndEx2Nt,
-  bitOrExNt,  bitOrEx1Nt,  bitOrEx2Nt,
+  emptyNt,    exprNt, eqExNt, idNt, 
+  logOrExNt,  logOrEx1Nt, logOrEx2Nt,
+  logAndExNt, logAndEx1Nt, logAndEx2Nt,
+  bitOrExNt,  bitOrEx1Nt, bitOrEx2Nt,
   bitAndExNt, bitAndEx1Nt, bitAndEx2Nt,
+  assignOpNt, 
+  assignExNt, assignEx1Nt, assignEx2Nt, assignEx3Nt,
+
   withNt,   with1Nt,   with2Nt,     with3Nt,  with4Nt, with5Nt,
   returnNt, return1Nt, return2Nt, return3Nt,
   forNt,    for1Nt,    for2Nt, for3Nt, for4Nt, for5Nt, for6Nt, for7Nt,
   ifElseNt, ifElse1Nt,
   ifNt,     if1Nt, if2Nt, if3Nt, if4Nt,  
-  assignNt, assign1Nt, assign2Nt,
+  
   blockNt,  block1Nt, block2Nt,
-  statemNt, statemListNt,   
+  statemNt, statemListNt, statemList1Nt,
   wrongNt,  assgnOpNt, 
   progNt,
   countNonTerms
@@ -104,7 +110,7 @@ int classifier(string str, char state, vector<LexAttr> &recLexs);
 //For Parser
 int parseNt(int last, int nt, int& act);
 void reduceNext(stack<int>& buf, int next,ofstream& fout);
-int reduceLast(stack<int>buf, int nextAct, int last, ofstream& fout);
+int reduceLast(stack<int>&buf, int nextAct, int last, ofstream& fout);
 void addStatementShifts(int nt);
 void addExprShifts(int nt);
 void addDefaultShifts(int nt);

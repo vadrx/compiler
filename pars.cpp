@@ -8,31 +8,35 @@ void initParsMachine(){
 	parsMachine.addThread(getNt(emptyNt), numbType, getNt(eqExNt), reduceAct);
 	//Bitwise And Expession
 	parsMachine.addThread(getNt(emptyNt), eqExNt, getNt(bitAndExNt), reduceAct);
-	parsMachine.addThread(getNt(bitAndExNt), bit1, getNt(bitAndEx1Nt), reduceAct);
-	addDefaultShifts(bitAndEx1Nt);
-	parsMachine.addThread(getNt(bitAndEx1Nt), eqExNt, getNt(bitAndExNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), bitAndExNt, getNt(bitAndEx1Nt), reduceAct);
+	parsMachine.addThread(getNt(bitAndEx1Nt), bit1, getNt(bitAndEx2Nt), reduceAct);
+	//addDefaultShifts(bitAndEx2Nt);
+	parsMachine.addThread(getNt(bitAndEx2Nt), eqExNt, getNt(bitAndExNt), reduceAct);
 	
 	//Bitwise Or Expession
 	parsMachine.addThread(getNt(emptyNt), bitAndExNt, getNt(bitOrExNt), reduceAct);
-	parsMachine.addThread(getNt(bitOrExNt), bit2, getNt(bitOrEx1Nt), reduceAct);
-	addDefaultShifts(bitOrEx1Nt);
-	parsMachine.addThread(getNt(bitOrEx1Nt), bitAndExNt, getNt(bitOrExNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), bitOrExNt, getNt(bitOrEx1Nt), reduceAct);
+	parsMachine.addThread(getNt(bitOrEx1Nt), bit2, getNt(bitOrEx2Nt), reduceAct);
+	//addDefaultShifts(bitOrEx2Nt);
+	parsMachine.addThread(getNt(bitOrEx2Nt), bitAndExNt, getNt(bitOrExNt), reduceAct);
 
 	//Logic And Expession
 	parsMachine.addThread(getNt(emptyNt), bitOrExNt, getNt(logAndExNt), reduceAct);
-	parsMachine.addThread(getNt(logAndExNt), log1, getNt(logAndEx1Nt), reduceAct);
-	addDefaultShifts(logAndEx1Nt);
-	parsMachine.addThread(getNt(logAndEx1Nt), bitOrExNt, getNt(logAndExNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), logAndExNt, getNt(logAndEx1Nt), reduceAct);
+	parsMachine.addThread(getNt(logAndEx1Nt), log1, getNt(logAndEx2Nt), reduceAct);
+	//addDefaultShifts(logAndEx2Nt);
+	parsMachine.addThread(getNt(logAndEx2Nt), bitOrExNt, getNt(logAndExNt), reduceAct);
 
 	//Logic Or Expession
 	parsMachine.addThread(getNt(emptyNt), logAndExNt, getNt(logOrExNt), reduceAct);
-	parsMachine.addThread(getNt(logOrExNt), log2, getNt(logOrEx1Nt), reduceAct);
-	addDefaultShifts(logOrEx1Nt);
-	parsMachine.addThread(getNt(logOrEx1Nt), logAndExNt, getNt(logOrExNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), logOrExNt, getNt(logOrEx1Nt), reduceAct);
+	parsMachine.addThread(getNt(logOrEx1Nt), log2, getNt(logOrEx2Nt), reduceAct);
+	//addDefaultShifts(logOrEx2Nt);
+	parsMachine.addThread(getNt(logOrEx2Nt), logAndExNt, getNt(logOrExNt), reduceAct);
 
 	//Assignment Operator
 	parsMachine.addThread(getNt(emptyNt), assignType, getNt(assignOpNt), reduceAct);
-	addDefaultShifts(assignOpNt);
+	//addDefaultShifts(assignOpNt);
 	//Assignment Expression
 	parsMachine.addThread(getNt(emptyNt), logOrExNt, getNt(assignExNt), reduceAct);
 	parsMachine.addThread(getNt(idNt), assignOpNt, getNt(assignEx1Nt), reduceAct);
@@ -90,21 +94,29 @@ string getNameNt(int nt){
 			return "bitAndExNt";
 		case bitAndEx1Nt:
 			return "bitAndEx1Nt";
+		case bitAndEx2Nt:
+			return "bitAndEx2Nt";
 
 		case bitOrExNt:
 			return "bitOrExNt";
 		case bitOrEx1Nt:
 			return "bitOrEx1Nt";
+		case bitOrEx2Nt:
+			return "bitOrEx2Nt";
 
 		case logOrExNt:
 			return "logOrExNt";
 		case logOrEx1Nt:
 			return "logOrEx1Nt";
+		case logOrEx2Nt:
+			return "logOrEx2Nt";
 
 		case logAndExNt:
 			return "logAndExNt";
 		case logAndEx1Nt:
 			return "logAndEx1Nt";
+		case logAndEx2Nt:
+			return "logAndEx2Nt";
 
 		case assignOpNt:
 			return "assignOpNt";
@@ -170,7 +182,7 @@ int reduceLast(stack<int> &buf, int nextAct, int last, ofstream& fout){
         int preLast = buf.top();
 				int newNext = parseNt(preLast ,last + emptyNt, nextAct);
         if(nextAct == reduceAct) {
-            //fout<<"pop (preLast)\t"<<getNameNt(preLast)<<"\t pop (last)\t"<<getNameNt(last)<<",\t push \t"<<getNameNt(newNext)<<endl;
+            fout<<"pop (preLast)\t"<<getNameNt(preLast)<<"\t pop (last)\t"<<getNameNt(last)<<",\t push \t"<<getNameNt(newNext)<<endl;
             buf.pop();
             buf.push(newNext);
             return 1;
