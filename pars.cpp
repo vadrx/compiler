@@ -10,37 +10,37 @@ void initParsMachine(){
 	parsMachine.addThread(getNt(emptyNt), eqExNt, getNt(bitAndExNt), reduceAct);
 	parsMachine.addThread(getNt(emptyNt), bitAndExNt, getNt(bitAndEx1Nt), reduceAct);
 	parsMachine.addThread(getNt(bitAndEx1Nt), bit1, getNt(bitAndEx2Nt), reduceAct);
-	//addDefaultShifts(bitAndEx2Nt);
+	addDefaultShifts(bitAndEx2Nt);
 	parsMachine.addThread(getNt(bitAndEx2Nt), eqExNt, getNt(bitAndExNt), reduceAct);
 	
 	//Bitwise Or Expession
 	parsMachine.addThread(getNt(emptyNt), bitAndExNt, getNt(bitOrExNt), reduceAct);
 	parsMachine.addThread(getNt(emptyNt), bitOrExNt, getNt(bitOrEx1Nt), reduceAct);
 	parsMachine.addThread(getNt(bitOrEx1Nt), bit2, getNt(bitOrEx2Nt), reduceAct);
-	//addDefaultShifts(bitOrEx2Nt);
+	addDefaultShifts(bitOrEx2Nt);
 	parsMachine.addThread(getNt(bitOrEx2Nt), bitAndExNt, getNt(bitOrExNt), reduceAct);
 
 	//Logic And Expession
 	parsMachine.addThread(getNt(emptyNt), bitOrExNt, getNt(logAndExNt), reduceAct);
 	parsMachine.addThread(getNt(emptyNt), logAndExNt, getNt(logAndEx1Nt), reduceAct);
 	parsMachine.addThread(getNt(logAndEx1Nt), log1, getNt(logAndEx2Nt), reduceAct);
-	//addDefaultShifts(logAndEx2Nt);
+	addDefaultShifts(logAndEx2Nt);
 	parsMachine.addThread(getNt(logAndEx2Nt), bitOrExNt, getNt(logAndExNt), reduceAct);
 
 	//Logic Or Expession
 	parsMachine.addThread(getNt(emptyNt), logAndExNt, getNt(logOrExNt), reduceAct);
 	parsMachine.addThread(getNt(emptyNt), logOrExNt, getNt(logOrEx1Nt), reduceAct);
 	parsMachine.addThread(getNt(logOrEx1Nt), log2, getNt(logOrEx2Nt), reduceAct);
-	//addDefaultShifts(logOrEx2Nt);
+	addDefaultShifts(logOrEx2Nt);
 	parsMachine.addThread(getNt(logOrEx2Nt), logAndExNt, getNt(logOrExNt), reduceAct);
 
 	//Assignment Operator
 	parsMachine.addThread(getNt(emptyNt), assignType, getNt(assignOpNt), reduceAct);
-	//addDefaultShifts(assignOpNt);
+	addDefaultShifts(assignOpNt);
 	//Assignment Expression
 	parsMachine.addThread(getNt(emptyNt), logOrExNt, getNt(assignExNt), reduceAct);
-	parsMachine.addThread(getNt(idNt), assignOpNt, getNt(assignEx1Nt), reduceAct);
-	//addDefaultShifts(assignEx1Nt);
+	parsMachine.addThread(getNt(idNt), assignType, getNt(assignEx1Nt), reduceAct);
+	addDefaultShifts(assignEx1Nt);
 	parsMachine.addThread(getNt(assignEx1Nt), assignExNt, getNt(assignExNt), reduceAct);
 
 	//Expression
