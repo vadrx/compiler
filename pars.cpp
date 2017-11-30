@@ -2,28 +2,45 @@
 
 StateMachine parsMachine(getNt(countNonTerms),countNonTerms, wrongAct);
 void initParsMachine(){
+	parsMachine.addThread(getNt(emptyNt), idType, getNt(idNt), reduceAct);
 	//Equality Expression
-	parsMachine.addThread(getNt(emptyNt), idType, getNt(bitAndExNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), numbType, getNt(bitAndExNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), idNt, getNt(eqExNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), numbType, getNt(eqExNt), reduceAct);
 	//Bitwise And Expession
+	parsMachine.addThread(getNt(emptyNt), eqExNt, getNt(bitAndExNt), reduceAct);
 	parsMachine.addThread(getNt(bitAndExNt), bit1, getNt(bitAndEx1Nt), reduceAct);
-	parsMachine.addThread(getNt(bitAndEx1Nt), idType, getNt(bitOrExNt), reduceAct);
-	parsMachine.addThread(getNt(bitAndEx1Nt), numbType, getNt(bitOrExNt), reduceAct);
+	addDefaultShifts(bitAndEx1Nt);
+	parsMachine.addThread(getNt(bitAndEx1Nt), eqExNt, getNt(bitAndExNt), reduceAct);
+	
 	//Bitwise Or Expession
-	parsMachine.addThread(getNt(bitOrExNt), bitAndExNt, getNt(bitOrExNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), bitAndExNt, getNt(bitOrExNt), reduceAct);
 	parsMachine.addThread(getNt(bitOrExNt), bit2, getNt(bitOrEx1Nt), reduceAct);
 	addDefaultShifts(bitOrEx1Nt);
 	parsMachine.addThread(getNt(bitOrEx1Nt), bitAndExNt, getNt(bitOrExNt), reduceAct);
-	
+
 	//Logic And Expession
 	parsMachine.addThread(getNt(emptyNt), bitOrExNt, getNt(logAndExNt), reduceAct);
-	//parsMachine.addThread(getNt(bitOrEx1Nt), bitAndExNt, getNt(bitOrExNt), reduceAct);
+	parsMachine.addThread(getNt(logAndExNt), log1, getNt(logAndEx1Nt), reduceAct);
+	addDefaultShifts(logAndEx1Nt);
+	parsMachine.addThread(getNt(logAndEx1Nt), bitOrExNt, getNt(logAndExNt), reduceAct);
+
 	//Logic Or Expession
+	parsMachine.addThread(getNt(emptyNt), logAndExNt, getNt(logOrExNt), reduceAct);
+	parsMachine.addThread(getNt(logOrExNt), log2, getNt(logOrEx1Nt), reduceAct);
+	addDefaultShifts(logOrEx1Nt);
+	parsMachine.addThread(getNt(logOrEx1Nt), logAndExNt, getNt(logOrExNt), reduceAct);
 
 	//Assignment Operator
-	parsMachine.addThread(getNt(emptyNt), assignType, getNt(assignNt), reduceAct);
-
+	parsMachine.addThread(getNt(emptyNt), assignType, getNt(assignOpNt), reduceAct);
+	addDefaultShifts(assignOpNt);
 	//Assignment Expression
+	parsMachine.addThread(getNt(emptyNt), logOrExNt, getNt(assignExNt), reduceAct);
+	parsMachine.addThread(getNt(idNt), assignOpNt, getNt(assignEx1Nt), reduceAct);
+	//addDefaultShifts(assignEx1Nt);
+	parsMachine.addThread(getNt(assignEx1Nt), assignExNt, getNt(assignExNt), reduceAct);
+
+	//Expression
+	parsMachine.addThread(getNt(emptyNt), assignExNt, getNt(exprNt), reduceAct);
 
 	//Statement
 	parsMachine.addThread(getNt(emptyNt), exprNt, getNt(statemNt), reduceAct);
@@ -36,8 +53,9 @@ void initParsMachine(){
 
 	//Statement List
 	parsMachine.addThread(getNt(emptyNt), statemNt, getNt(statemListNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), statemListNt, getNt(statemListNt), reduceAct);
-	parsMachine.addThread(getNt(statemListNt), statemNt, getNt(statemListNt), reduceAct);
+	parsMachine.addThread(getNt(emptyNt), statemListNt, getNt(statemList1Nt), reduceAct);
+	addDefaultShifts(statemList1Nt);
+	parsMachine.addThread(getNt(statemList1Nt), statemNt, getNt(statemListNt), reduceAct);
 	parsMachine.addThread(getNt(statemListNt), endType, getNt(progNt), reduceAct);
 }
 void addDefaultShifts(int nt){
@@ -45,10 +63,10 @@ void addDefaultShifts(int nt){
 	parsMachine.addThread(getNt(nt), idType, getNt(emptyNt), shiftAct);
 }
 void addStatementShifts(int nt){
-	
+
 }
 void addExprShifts(int nt){
-	
+
 }
 
 void printParsTable(vector<LexAttr> &recLexs){
@@ -65,6 +83,9 @@ string getNameNt(int nt){
 			return "emptyNt";
 		case eqExNt:
 			return "eqExNt";
+		case idNt:
+			return "idNt";
+
 		case bitAndExNt:
 			return "bitAndExNt";
 		case bitAndEx1Nt:
@@ -75,11 +96,30 @@ string getNameNt(int nt){
 		case bitOrEx1Nt:
 			return "bitOrEx1Nt";
 
+		case logOrExNt:
+			return "logOrExNt";
+		case logOrEx1Nt:
+			return "logOrEx1Nt";
+
+		case logAndExNt:
+			return "logAndExNt";
+		case logAndEx1Nt:
+			return "logAndEx1Nt";
+
+		case assignOpNt:
+			return "assignOpNt";
+		case assignExNt:
+			return "assignExNt";
+
+		case exprNt:
+			return "exprNt";
 
 		case statemNt:
 			return "statemNt";
 		case statemListNt:
 			return "statemListNt";
+		case statemList1Nt:
+			return "statemList1Nt";
 		case progNt:
 			return "progNt";
 		default:
@@ -91,7 +131,7 @@ int parseLex(LexAttr lex, stack<int>& buf, ofstream& fout){
 	switch(act) {
 		case reduceAct: {
 				reduceNext(buf, next, fout);
-				reduceLast(buf, nextAct, last, fout);      
+				reduceLast(buf, nextAct, last, fout);
 		}
 		break;
 		case shiftAct: {
@@ -99,15 +139,15 @@ int parseLex(LexAttr lex, stack<int>& buf, ofstream& fout){
 			if(nextAct == reduceAct) {
 				fout<<"push (next)\t"<<getNameNt(next)<<endl;
 				buf.push(next);
-			} else 
+			} else
 				return -1;
 		}
 		break;
 		case wrongAct: {
 			if(reduceLast(buf, nextAct, last, fout))
 				return parseLex(lex, buf, fout);
-			next = parseNt(getNt(emptyNt), last + countNonTerms, nextAct);
-      if(nextAct == reduceAct){
+			next = parseNt(getNt(emptyNt), last + emptyNt, nextAct);
+      if(nextAct == reduceAct) {
       	reduceNext(buf, next, fout);
       	return parseLex(lex, buf, fout);
       } else {
@@ -123,21 +163,19 @@ void reduceNext(stack<int>& buf, int next, ofstream& fout){
     buf.push(next);
 }
 
-int reduceLast(stack<int>buf, int nextAct, int last, ofstream& fout){
+int reduceLast(stack<int> &buf, int nextAct, int last, ofstream& fout){
 	if(buf.size()>=2) {
         last = buf.top();
         buf.pop();
-        int preLast = buf.top(), newNext = parseNt(preLast ,last + countNonTerms, nextAct);
-        //cout << "act " << next_act << " last " << preLast << " pt " << last << " next " << next << endl;
+        int preLast = buf.top();
+				int newNext = parseNt(preLast ,last + emptyNt, nextAct);
         if(nextAct == reduceAct) {
-            fout<<"pop (preLast)\t"<<getNameNt(preLast)<<"\t pop (last)\t"<<getNameNt(last)<<",\t push \t"<<getNameNt(newNext)<<endl;
+            //fout<<"pop (preLast)\t"<<getNameNt(preLast)<<"\t pop (last)\t"<<getNameNt(last)<<",\t push \t"<<getNameNt(newNext)<<endl;
             buf.pop();
             buf.push(newNext);
             return 1;
         } else {
-        		fout<<"push (last)\t"<<getNameNt(last)<<endl;
             buf.push(last);
-            return 0;
         }
     }
     return 0;
