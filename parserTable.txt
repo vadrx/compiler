@@ -2,29 +2,86 @@
 ####      PARSER  TABLE      ####
 #################################
 
-pop (top)	emptyNt	 push (next)	idNt
+pop (top)	emptyNt	 push (next)	withNt
+pop (top)	withNt	 push (next)	with1Nt
 pop (top)	idNt	 push (next)	assignExNt
-push (next)	eqExNt
-pop (top)	eqExNt	 push (next)	bitAndExNt
-pop (top)	bitAndExNt	 push (next)	bitAndEx1Nt
-push (next)	idNt
 pop (top)	idNt	 push (next)	eqExNt
-pop (preLast)	bitAndEx1Nt	 pop (last)	eqExNt,	 push 	bitAndExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
 pop (top)	bitAndExNt	 push (next)	bitOrExNt
-pop (top)	bitOrExNt	 push (next)	bitOrEx1Nt
-push (next)	idNt
-pop (top)	idNt	 push (next)	eqExNt
-pop (top)	eqExNt	 push (next)	bitAndExNt
-pop (top)	bitAndExNt	 push (next)	bitAndEx1Nt
-push (next)	idNt
-pop (top)	idNt	 push (next)	eqExNt
-pop (preLast)	bitAndEx1Nt	 pop (last)	eqExNt,	 push 	bitAndExNt
-pop (preLast)	bitOrEx1Nt	 pop (last)	bitAndExNt,	 push 	bitOrExNt
 pop (top)	bitOrExNt	 push (next)	logAndExNt
 pop (top)	logAndExNt	 push (next)	logOrExNt
 pop (top)	logOrExNt	 push (next)	assignExNt
-pop (preLast)	assignExNt	 pop (last)	assignExNt,	 push 	assignExNt
+pop (top)	assignExNt	 push (next)	exprNt
+pop (top)	with2Nt	 push (next)	with3Nt
+pop (top)	idNt	 push (next)	eqExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitAndEx1Nt
+pop (top)	idNt	 push (next)	eqExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
 pop (top)	assignExNt	 push (next)	exprNt
 pop (top)	exprNt	 push (next)	statemNt
+pop (top)	with4Nt	 push (next)	withNt
+pop (top)	idNt	 push (next)	assignExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
+pop (top)	assignExNt	 push (next)	exprNt
+pop (top)	exprNt	 push (next)	statemNt
+pop (top)	returnNt	 push (next)	returnNt
+pop (top)	forNt	 push (next)	for1Nt
+pop (top)	for1Nt	 push (next)	for2Nt
+pop (top)	idNt	 push (next)	assignExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
+pop (top)	assignExNt	 push (next)	exprNt
+pop (top)	for2Nt	 push (next)	forNt
+pop (top)	idNt	 push (next)	eqExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
+pop (top)	forNt	 push (next)	for1Nt
+pop (top)	idNt	 push (next)	assignExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
+pop (top)	assignExNt	 push (next)	exprNt
+pop (top)	for2Nt	 push (next)	for2Nt
+pop (top)	idNt	 push (next)	assignExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
+pop (top)	assignExNt	 push (next)	exprNt
+pop (top)	for2Nt	 push (next)	for2Nt
+pop (top)	idNt	 push (next)	assignExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
+pop (top)	assignExNt	 push (next)	exprNt
+pop (top)	for2Nt	 push (next)	forNt
+pop (top)	idNt	 push (next)	eqExNt
+pop (top)	eqExNt	 push (next)	bitAndExNt
+pop (top)	bitAndExNt	 push (next)	bitOrExNt
+pop (top)	bitOrExNt	 push (next)	logAndExNt
+pop (top)	logAndExNt	 push (next)	logOrExNt
+pop (top)	logOrExNt	 push (next)	assignExNt
+pop (top)	assignExNt	 push (next)	exprNt
+pop (top)	exprNt	 push (next)	statemNt
+pop (top)	forNt	 push (next)	statemNt
 pop (top)	statemNt	 push (next)	statemListNt
 pop (top)	statemListNt	 push (next)	progNt

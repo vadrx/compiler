@@ -33,7 +33,7 @@ enum tokenType {
   logicType,  bitwiseType, arifmType, wrongType,  endType,
 
   //Res Words
-  ifRes,    elseRes,   forRes,  withRes,  returnRes,
+  ifRes,    elseRes,   forRes,  withRes,  returnRes, inRes,
   //Bitwise Opretators
   bit1, //&
   bit2, //|
@@ -49,13 +49,12 @@ enum tokenType {
   //countTokenTypes, (21)
 
   //Non Terms:  (For Parser)
-  emptyNt,    exprNt, eqExNt, idNt, 
-  logOrExNt,  logOrEx1Nt, logOrEx2Nt,
-  logAndExNt, logAndEx1Nt, logAndEx2Nt,
-  bitOrExNt,  bitOrEx1Nt, bitOrEx2Nt,
-  bitAndExNt, bitAndEx1Nt, bitAndEx2Nt,
-  assignOpNt, 
-  assignExNt, assignEx1Nt, assignEx2Nt, assignEx3Nt,
+  emptyNt,    exprNt,     eqExNt, idNt, 
+  logOrExNt,  logOrEx1Nt,
+  logAndExNt, logAndEx1Nt,
+  bitOrExNt,  bitOrEx1Nt,
+  bitAndExNt, bitAndEx1Nt,
+  assignOpNt, assignExNt,
 
   withNt,   with1Nt,   with2Nt,     with3Nt,  with4Nt, with5Nt,
   returnNt, return1Nt, return2Nt, return3Nt,

@@ -1,1 +1,4 @@
-1&b|a&b 
+with(x=a)b&a;
+return a=0; 
+for(a in b=0)sdf
+for(a=0; b=0; c=0)sda 
