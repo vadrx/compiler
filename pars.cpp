@@ -70,13 +70,18 @@ void initParsMachine(){
 	parsMachine.addThread(getNt(emptyNt), forRes, getNt(forNt), reduceAct);
 	parsMachine.addThread(getNt(forNt), leftParent, getNt(for1Nt), reduceAct);
 	addDefaultShifts(for1Nt);
-	parsMachine.addThread(getNt(for1Nt), idNt, getNt(for1Nt), reduceAct);
-	parsMachine.addThread(getNt(for1Nt), inRes, getNt(for2Nt), reduceAct);
 	parsMachine.addThread(getNt(for1Nt), exprNt, getNt(for2Nt), reduceAct);
 	parsMachine.addThread(getNt(for2Nt), semiCol, getNt(for2Nt), reduceAct);
+
+	parsMachine.addThread(getNt(for1Nt), idNt, getNt(for2Nt), reduceAct);
 	addDefaultShifts(for2Nt);
-	parsMachine.addThread(getNt(for2Nt), exprNt, getNt(for2Nt), reduceAct);
-	parsMachine.addThread(getNt(for2Nt), rightParent, getNt(forNt), reduceAct);
+	parsMachine.addThread(getNt(for2Nt), exprNt, getNt(for3Nt), reduceAct);
+	parsMachine.addThread(getNt(for3Nt), semiCol, getNt(for3Nt), reduceAct);
+
+	parsMachine.addThread(getNt(for2Nt), inRes, getNt(for3Nt), reduceAct);
+	addDefaultShifts(for3Nt);
+	parsMachine.addThread(getNt(for3Nt), exprNt, getNt(for3Nt), reduceAct);
+	parsMachine.addThread(getNt(for3Nt), rightParent, getNt(forNt), reduceAct);
 	addDefaultShifts(forNt);
 	parsMachine.addThread(getNt(forNt), statemNt, getNt(forNt), reduceAct);
 

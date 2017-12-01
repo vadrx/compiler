@@ -34,7 +34,7 @@ pop (top)	assignExNt	 push (next)	exprNt
 pop (top)	exprNt	 push (next)	statemNt
 pop (top)	returnNt	 push (next)	returnNt
 pop (top)	forNt	 push (next)	for1Nt
-pop (top)	for1Nt	 push (next)	for2Nt
+pop (top)	for2Nt	 push (next)	27
 pop (top)	idNt	 push (next)	assignExNt
 pop (top)	eqExNt	 push (next)	bitAndExNt
 pop (top)	bitAndExNt	 push (next)	bitOrExNt
@@ -42,7 +42,7 @@ pop (top)	bitOrExNt	 push (next)	logAndExNt
 pop (top)	logAndExNt	 push (next)	logOrExNt
 pop (top)	logOrExNt	 push (next)	assignExNt
 pop (top)	assignExNt	 push (next)	exprNt
-pop (top)	for2Nt	 push (next)	forNt
+pop (top)	27	 push (next)	forNt
 pop (top)	idNt	 push (next)	eqExNt
 pop (top)	eqExNt	 push (next)	bitAndExNt
 pop (top)	bitAndExNt	 push (next)	bitOrExNt
@@ -65,7 +65,7 @@ pop (top)	bitOrExNt	 push (next)	logAndExNt
 pop (top)	logAndExNt	 push (next)	logOrExNt
 pop (top)	logOrExNt	 push (next)	assignExNt
 pop (top)	assignExNt	 push (next)	exprNt
-pop (top)	for2Nt	 push (next)	for2Nt
+pop (top)	27	 push (next)	27
 pop (top)	idNt	 push (next)	assignExNt
 pop (top)	eqExNt	 push (next)	bitAndExNt
 pop (top)	bitAndExNt	 push (next)	bitOrExNt
@@ -73,7 +73,7 @@ pop (top)	bitOrExNt	 push (next)	logAndExNt
 pop (top)	logAndExNt	 push (next)	logOrExNt
 pop (top)	logOrExNt	 push (next)	assignExNt
 pop (top)	assignExNt	 push (next)	exprNt
-pop (top)	for2Nt	 push (next)	forNt
+pop (top)	27	 push (next)	forNt
 pop (top)	idNt	 push (next)	eqExNt
 pop (top)	eqExNt	 push (next)	bitAndExNt
 pop (top)	bitAndExNt	 push (next)	bitOrExNt
