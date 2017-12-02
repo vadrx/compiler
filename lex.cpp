@@ -20,10 +20,10 @@ ResWord::ResWord(string word, tokenType key){
     this->word = word;
     this->key = key;
 }
-list<ResWord> resWords[5];
+list<ResWord> resWords[6];
 hash<string> hashFunc;
 void addHash(string word, tokenType key){
-    resWords[hashFunc(word)%5].push_back(ResWord(word,key));
+    resWords[hashFunc(word)%6].push_back(ResWord(word,key));
 }
 void initHashTable(){
     addHash("if",ifRes);
@@ -31,9 +31,10 @@ void initHashTable(){
     addHash("for",forRes);
     addHash("with",withRes);
     addHash("return",returnRes);
+    addHash("in",inRes);
 }
 int findResWord(string word){
-    int h = hashFunc(word)%5;
+    int h = hashFunc(word)%6;
     for (auto it = resWords[h].begin(); it != resWords[h].end(); it++) {
         if(it->word == word)
             return it->key;
@@ -109,6 +110,9 @@ void printLexTable(vector<LexAttr> &recLexs){
         case returnRes:
             msg = "Res Word  ";
         break;
+        case inRes:
+            msg = "Res Word  ";
+        break;
         case endType:
         break;
         case spaceType:
@@ -137,8 +141,11 @@ void printLexTable(vector<LexAttr> &recLexs){
         case assignType:
             msg = "Assignment";
         break;
-        case logicType:
-            msg = "Logic     ";
+        case log1:
+            msg = "Logic1     ";
+        break;
+        case log2:
+            msg = "Logic2     ";
         break;
         case bit1:
             msg = "Bitwise1   ";
@@ -216,8 +223,14 @@ int classifier(string str, char state, vector<LexAttr> &recLexs){
         }
         break;
         case logicSt: {
-            recLexs.push_back(LexAttr(lexMachine.numstr, str, logicType, logicSt));
-            return logicType;
+            if(str == "&&"){
+                recLexs.push_back(LexAttr(lexMachine.numstr, str, log1, logicSt));
+                return log1;
+            }
+            if(str == "||"){
+                recLexs.push_back(LexAttr(lexMachine.numstr, str, log2, logicSt));
+                return log2;
+            }
         }
         break;
         case bitwiseSt: {

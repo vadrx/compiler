@@ -1,4 +1,14 @@
-with(x=a)b&a;
-return a=0; 
-for(a in b=0)sdf
-for(a=0; b=0; c=0)sda 
+with(a&b) {
+ for(c in a&b) {
+  for(a=0; a&b; a+=1) {
+   a+=b
+   c/=1
+  }
+  return 1;
+ } 
+};
+if(c=0) {
+ return 1;
+} else {
+ return 0
+} 

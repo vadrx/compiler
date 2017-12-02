@@ -12,7 +12,6 @@ int main()
     lexan(fin, ch, recLexs);
     printLexTable(recLexs);
     parser(recLexs);
-    printParsTable(recLexs);
     fin.close();
     return 0;
 }

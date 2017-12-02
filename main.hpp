@@ -1,6 +1,5 @@
 #include<iostream>
 #include<fstream>
-#include<cctype>
 #include<map>
 #include<string>
 #include<list>
@@ -11,7 +10,7 @@ using namespace std;
 enum States {
   endSt,        wrongSt,     emptySt, numberSt, logicSt,   // && ||   
   assignmentSt, separatorSt, dotSt,   arifmSt,  bitwiseSt, // & |
-  wordSt, countStates
+  wordSt,       countStates
 };
 enum SymbolType {
   digit,      // 0..9
@@ -31,7 +30,6 @@ struct Symbol {
 enum tokenType {
   spaceType,  idType,      numbType,  assignType,
   logicType,  bitwiseType, arifmType, wrongType,  endType,
-
   //Res Words
   ifRes,    elseRes,   forRes,  withRes,  returnRes, inRes,
   //Bitwise Opretators
@@ -46,27 +44,25 @@ enum tokenType {
   rightParent,  // )
   leftBrace,    // {
   rightBrace,   // }
-  //countTokenTypes, (21)
-
+  //countTokenTypes,
   //Non Terms:  (For Parser)
-  emptyNt,    exprNt,     eqExNt, idNt, 
+  emptyNt,    exprNt,       eqExNt,   idNt, 
   logOrExNt,  logOrEx1Nt,
   logAndExNt, logAndEx1Nt,
   bitOrExNt,  bitOrEx1Nt,
   bitAndExNt, bitAndEx1Nt,
-  assignOpNt, assignExNt,
+  assignOpNt, assignExNt,   assgnOpNt,
 
-  withNt,   with1Nt,   with2Nt,     with3Nt,  with4Nt, with5Nt,
-  returnNt, return1Nt, return2Nt, return3Nt,
-  forNt,    for1Nt,    for2Nt, for3Nt, for4Nt, for5Nt, for6Nt, for7Nt,
-  ifElseNt, ifElse1Nt,
-  ifNt,     if1Nt, if2Nt, if3Nt, if4Nt,  
+  withNt,     with1Nt,      with2Nt,  with3Nt,
+  returnNt,   return1Nt,    return2Nt,
+  forNt,      for1Nt,       for2Nt,   for3Nt,
+
+  ifNt,       if1Nt,        if2Nt,
+  ifElseNt,   ifElse1Nt,
   
-  blockNt,  block1Nt, block2Nt,
-  statemNt, statemListNt, statemList1Nt,
-  wrongNt,  assgnOpNt, 
-  progNt,
-  countNonTerms
+  blockNt,    block1Nt,     block2Nt,
+  statemNt,   statemListNt, statemList1Nt,
+  wrongNt,    progNt,       countNonTerms
 };
 struct ResWord {
   ResWord(string word, tokenType key);
@@ -110,11 +106,8 @@ int classifier(string str, char state, vector<LexAttr> &recLexs);
 int parseNt(int last, int nt, int& act);
 void reduceNext(stack<int>& buf, int next,ofstream& fout);
 int reduceLast(stack<int>&buf, int nextAct, int last, ofstream& fout);
-void addStatementShifts(int nt);
-void addExprShifts(int nt);
 void addDefaultShifts(int nt);
 void initParsMachine();
-void printParsTable(vector<LexAttr> &recLexs);
 string getNameNt(int nt);
 int parser(vector<LexAttr> &recLexs);
 int getNt(int type);

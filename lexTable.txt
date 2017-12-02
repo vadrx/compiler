@@ -4,10 +4,76 @@
 
 CLASS|STR|  TYPE LEX  | LEXEME
 --------------------------------
-#3  | 1  | Number     | 1
-#9  | 1  | Bitwise1    | &
-#10 | 1  | Identifier | b
-#9  | 1  | Bitwise2    | |
+#12 | 1  | Res Word   | with
+#6  | 1  | Separator  | (
 #10 | 1  | Identifier | a
 #9  | 1  | Bitwise1    | &
 #10 | 1  | Identifier | b
+#6  | 1  | Separator  | )
+#6  | 1  | Separator  | {
+--------------------------------
+#11 | 2  | Res Word   | for
+#6  | 2  | Separator  | (
+#10 | 2  | Identifier | c
+#14 | 2  | Res Word   | in
+#10 | 2  | Identifier | a
+#9  | 2  | Bitwise1    | &
+#10 | 2  | Identifier | b
+#6  | 2  | Separator  | )
+#6  | 2  | Separator  | {
+--------------------------------
+#11 | 3  | Res Word   | for
+#6  | 3  | Separator  | (
+#10 | 3  | Identifier | a
+#5  | 3  | Assignment | =
+#3  | 3  | Number     | 0
+#6  | 3  | Separator  | ;
+#10 | 3  | Identifier | a
+#9  | 3  | Bitwise1    | &
+#10 | 3  | Identifier | b
+#6  | 3  | Separator  | ;
+#10 | 3  | Identifier | a
+#5  | 3  | Assignment | +=
+#3  | 3  | Number     | 1
+#6  | 3  | Separator  | )
+#6  | 3  | Separator  | {
+--------------------------------
+#10 | 4  | Identifier | a
+#5  | 4  | Assignment | +=
+#10 | 4  | Identifier | b
+--------------------------------
+#10 | 5  | Identifier | c
+#5  | 5  | Assignment | /=
+#3  | 5  | Number     | 1
+--------------------------------
+#6  | 6  | Separator  | }
+--------------------------------
+#13 | 7  | Res Word   | return
+#3  | 7  | Number     | 1
+#6  | 7  | Separator  | ;
+--------------------------------
+#6  | 8  | Separator  | }
+--------------------------------
+#6  | 9  | Separator  | }
+#6  | 9  | Separator  | ;
+--------------------------------
+#9  | 10 | Res Word   | if
+#6  | 10 | Separator  | (
+#10 | 10 | Identifier | c
+#5  | 10 | Assignment | =
+#3  | 10 | Number     | 0
+#6  | 10 | Separator  | )
+#6  | 10 | Separator  | {
+--------------------------------
+#13 | 11 | Res Word   | return
+#3  | 11 | Number     | 1
+#6  | 11 | Separator  | ;
+--------------------------------
+#6  | 12 | Separator  | }
+#10 | 12 | Res Word   | else
+#6  | 12 | Separator  | {
+--------------------------------
+#13 | 13 | Res Word   | return
+#3  | 13 | Number     | 0
+--------------------------------
+#6  | 14 | Separator  | }
