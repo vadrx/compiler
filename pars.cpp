@@ -1,262 +1,263 @@
 #include "main.hpp"
 
-StateMachine parsMachine(getNt(countNonTerms),countNonTerms, wrongAct);
+StateMachine parsM(nT(countNT),countNT, wrong);
 void initParsMachine(){
-	parsMachine.addThread(getNt(emptyNt), idType, getNt(idNt), reduceAct);
-	//Equality Expression
-	parsMachine.addThread(getNt(emptyNt), idNt, getNt(eqExNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), numbType, getNt(eqExNt), reduceAct);
+	parsM.addThread(nT(EMP), idT, nT(ID), reduce);
+	//Equality Exression
+	parsM.addThread(nT(EMP), ID, nT(EQ), reduce);
+	parsM.addThread(nT(EMP), numbT, nT(EQ), reduce);
 
-	//Bitwise And Expession
-	parsMachine.addThread(getNt(emptyNt), eqExNt, getNt(bitAndExNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), bitAndExNt, getNt(bitAndExNt), reduceAct);
-	parsMachine.addThread(getNt(bitAndExNt), bit1, getNt(bitAndEx1Nt), reduceAct);
-	addDefaultShifts(bitAndEx1Nt);
-	parsMachine.addThread(getNt(bitAndEx1Nt), eqExNt, getNt(bitAndExNt), reduceAct);
-	
-	//Bitwise Or Expession
-	parsMachine.addThread(getNt(emptyNt), bitAndExNt, getNt(bitOrExNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), bitOrExNt, getNt(bitOrExNt), reduceAct);
-	parsMachine.addThread(getNt(bitOrExNt), bit2, getNt(bitOrEx1Nt), reduceAct);
-	addDefaultShifts(bitOrEx1Nt);
-	parsMachine.addThread(getNt(bitOrEx1Nt), bitAndExNt, getNt(bitOrExNt), reduceAct);
+	//Bitwise And Expression
+	parsM.addThread(nT(EMP), EQ, nT(BaEX), reduce);
+	parsM.addThread(nT(EMP), BaEX, nT(BaEX), reduce);
+	parsM.addThread(nT(BaEX), bit1, nT(BaEX1), reduce);
+	addShifts(BaEX1);
+	parsM.addThread(nT(BaEX1), EQ, nT(BaEX), reduce);
+	//Bitwise Or Expression
+	parsM.addThread(nT(EMP), BaEX, nT(BoEX), reduce);
+	parsM.addThread(nT(EMP), BoEX, nT(BoEX), reduce);
+	parsM.addThread(nT(BoEX), bit2, nT(BoEX1), reduce);
+	addShifts(BoEX1);
+	parsM.addThread(nT(BoEX1), BaEX, nT(BoEX), reduce);
 
-	//Logic And Expession
-	parsMachine.addThread(getNt(emptyNt), bitOrExNt, getNt(logAndExNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), logAndExNt, getNt(logAndExNt), reduceAct);
-	parsMachine.addThread(getNt(logAndExNt), log1, getNt(logAndEx1Nt), reduceAct);
-	addDefaultShifts(logAndEx1Nt);
-	parsMachine.addThread(getNt(logAndEx1Nt), bitOrExNt, getNt(logAndExNt), reduceAct);
+	//Logic And Expression
+	parsM.addThread(nT(EMP), BoEX, nT(LaEX), reduce);
+	parsM.addThread(nT(EMP), LaEX, nT(LaEX), reduce);
+	parsM.addThread(nT(LaEX), log1, nT(LaEX1), reduce);
+	addShifts(LaEX1);
+	parsM.addThread(nT(LaEX1), BoEX, nT(LaEX), reduce);
+	//Logic Or Expression
+	parsM.addThread(nT(EMP), LaEX, nT(LoEX), reduce);
+	parsM.addThread(nT(EMP), LoEX, nT(LoEX), reduce);
+	parsM.addThread(nT(LoEX), log2, nT(LoEX1), reduce);
+	addShifts(LoEX1);
+	parsM.addThread(nT(LoEX1), LaEX, nT(LoEX), reduce);
 
-	//Logic Or Expession
-	parsMachine.addThread(getNt(emptyNt), logAndExNt, getNt(logOrExNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), logOrExNt, getNt(logOrExNt), reduceAct);
-	parsMachine.addThread(getNt(logOrExNt), log2, getNt(logOrEx1Nt), reduceAct);
-	addDefaultShifts(logOrEx1Nt);
-	parsMachine.addThread(getNt(logOrEx1Nt), logAndExNt, getNt(logOrExNt), reduceAct);
-
-	//Assignment Expression
-	parsMachine.addThread(getNt(emptyNt), logOrExNt, getNt(assignExNt), reduceAct);
-	parsMachine.addThread(getNt(idNt), assignType, getNt(assignExNt), reduceAct);
-	addDefaultShifts(assignExNt);
-	parsMachine.addThread(getNt(assignExNt), assignExNt, getNt(assignExNt), reduceAct);
-
-	//Expression
-	parsMachine.addThread(getNt(emptyNt), assignExNt, getNt(exprNt), reduceAct);
+	//AssignmenT Expression
+	parsM.addThread(nT(EMP), LoEX, nT(AEX), reduce);
+	parsM.addThread(nT(ID), assignT, nT(AEX), reduce);
+	//Exression
+	parsM.addThread(nT(EMP), AEX, nT(EX), reduce);
+	addShifts(EX);
+	parsM.addThread(nT(EX), S, nT(EX), reduce);
 
 	//With
-	parsMachine.addThread(getNt(emptyNt), withRes, getNt(withNt), reduceAct);
-	parsMachine.addThread(getNt(withNt), leftParent, getNt(with1Nt), reduceAct);
-	addDefaultShifts(with1Nt);
-	parsMachine.addThread(getNt(with1Nt), exprNt, getNt(with2Nt), reduceAct);
-	parsMachine.addThread(getNt(with2Nt), rightParent, getNt(with2Nt), reduceAct);
-	addDefaultShifts(with2Nt);
-	parsMachine.addThread(getNt(with2Nt), statemNt, getNt(with3Nt), reduceAct);
-	parsMachine.addThread(getNt(with3Nt), semiCol, getNt(withNt), reduceAct);
-	addDefaultShifts(withNt);
-	parsMachine.addThread(getNt(withNt), statemNt, getNt(withNt), reduceAct);
-
+	parsM.addThread(nT(EMP), withR, nT(W), reduce);
+	parsM.addThread(nT(W), leftPar, nT(W1), reduce);
+	addShifts(W1);
+	parsM.addThread(nT(W1), EX, nT(W2), reduce);
+	parsM.addThread(nT(W2), rightPar, nT(W2), reduce);
+	addShifts(W2);
+	parsM.addThread(nT(W2), S, nT(W3), reduce);
+	parsM.addThread(nT(W3), semiCol, nT(W), reduce);
+	addShifts(W);
+	parsM.addThread(nT(W), S, nT(W), reduce);
 	//Return
-	parsMachine.addThread(getNt(emptyNt), returnRes, getNt(returnNt), reduceAct);
-	parsMachine.addThread(getNt(returnNt), semiCol, getNt(returnNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), returnNt, getNt(return1Nt), reduceAct);
-	addDefaultShifts(return1Nt);
-	parsMachine.addThread(getNt(return1Nt), exprNt, getNt(return2Nt), reduceAct);
-	parsMachine.addThread(getNt(return2Nt), semiCol, getNt(returnNt), reduceAct);
-	addDefaultShifts(returnNt);
-	parsMachine.addThread(getNt(returnNt), statemNt, getNt(returnNt), reduceAct);
+	parsM.addThread(nT(EMP), returnR, nT(R), reduce);
+	parsM.addThread(nT(R), semiCol, nT(R), reduce);
+	parsM.addThread(nT(EMP), R, nT(R1), reduce);
+	addShifts(R1);
+	parsM.addThread(nT(R1), EX, nT(R2), reduce);
+	addShifts(R2);
+	parsM.addThread(nT(R2), semiCol, nT(R), reduce);
+	addShifts(R);
+	parsM.addThread(nT(R), S, nT(R), reduce);
 
 	//For
-	parsMachine.addThread(getNt(emptyNt), forRes, getNt(forNt), reduceAct);
-	parsMachine.addThread(getNt(forNt), leftParent, getNt(for1Nt), reduceAct);
-	addDefaultShifts(for1Nt);
-	parsMachine.addThread(getNt(for1Nt), exprNt, getNt(for2Nt), reduceAct);
-	parsMachine.addThread(getNt(for2Nt), semiCol, getNt(for2Nt), reduceAct);
+	parsM.addThread(nT(EMP), forR, nT(F), reduce);
+	parsM.addThread(nT(F), leftPar, nT(F1), reduce);
+	addShifts(F1);
+	parsM.addThread(nT(F1), EX, nT(F2), reduce);
+	parsM.addThread(nT(F2), semiCol, nT(F2), reduce);
 
-	parsMachine.addThread(getNt(for1Nt), idNt, getNt(for2Nt), reduceAct);
-	addDefaultShifts(for2Nt);
-	parsMachine.addThread(getNt(for2Nt), exprNt, getNt(for3Nt), reduceAct);
-	parsMachine.addThread(getNt(for3Nt), semiCol, getNt(for3Nt), reduceAct);
+	parsM.addThread(nT(F1), ID, nT(F2), reduce);
+	addShifts(F2);
+	parsM.addThread(nT(F2), EX, nT(F3), reduce);
+	parsM.addThread(nT(F3), semiCol, nT(F3), reduce);
 
-	parsMachine.addThread(getNt(for2Nt), inRes, getNt(for3Nt), reduceAct);
-	addDefaultShifts(for3Nt);
-	parsMachine.addThread(getNt(for3Nt), exprNt, getNt(for3Nt), reduceAct);
-	parsMachine.addThread(getNt(for3Nt), rightParent, getNt(forNt), reduceAct);
-	addDefaultShifts(forNt);
-	parsMachine.addThread(getNt(forNt), statemNt, getNt(forNt), reduceAct);
+	parsM.addThread(nT(F2), inR, nT(F3), reduce);
+	addShifts(F3);
+	parsM.addThread(nT(F3), EX, nT(F3), reduce);
+	parsM.addThread(nT(F3), rightPar, nT(F), reduce);
+	addShifts(F);
+	parsM.addThread(nT(F), S, nT(F), reduce);
 
 	//If
-	parsMachine.addThread(getNt(emptyNt), ifRes, getNt(ifNt), reduceAct);
-	parsMachine.addThread(getNt(ifNt), leftParent, getNt(if1Nt), reduceAct);
-	addDefaultShifts(if1Nt);
-	parsMachine.addThread(getNt(if1Nt), exprNt, getNt(if2Nt), reduceAct);
-	parsMachine.addThread(getNt(if2Nt), rightParent, getNt(ifNt), reduceAct);
-	addDefaultShifts(ifNt);
-	parsMachine.addThread(getNt(ifNt), statemNt, getNt(ifNt), reduceAct);
+	parsM.addThread(nT(EMP), ifR, nT(IF), reduce);
+	parsM.addThread(nT(IF), leftPar, nT(IF1), reduce);
+	addShifts(IF1);
+	parsM.addThread(nT(IF1), EX, nT(IF2), reduce);
+	parsM.addThread(nT(IF2), rightPar, nT(IF), reduce);
+	addShifts(IF);
+	parsM.addThread(nT(IF), S, nT(IF), reduce);
 	// Else
-	parsMachine.addThread(getNt(ifNt), elseRes, getNt(ifElseNt), reduceAct);
-	addDefaultShifts(ifElseNt);
-	parsMachine.addThread(getNt(ifElseNt), statemNt, getNt(ifElseNt), reduceAct);
+	parsM.addThread(nT(IF), elseR, nT(IE), reduce);
+	addShifts(IE);
+	parsM.addThread(nT(IE), S, nT(IE), reduce);
 
 	//Block
-	parsMachine.addThread(getNt(emptyNt), leftBrace, getNt(block1Nt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), block1Nt, getNt(block2Nt), reduceAct);
-	addDefaultShifts(block2Nt);
-	parsMachine.addThread(getNt(block2Nt), statemListNt, getNt(block1Nt), reduceAct);
-	parsMachine.addThread(getNt(block1Nt), rightBrace, getNt(blockNt), reduceAct);
-	addDefaultShifts(blockNt);
-	parsMachine.addThread(getNt(blockNt), statemNt, getNt(blockNt), reduceAct);
-
-	//Statement
-	parsMachine.addThread(getNt(emptyNt), exprNt, getNt(statemNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), withNt, getNt(statemNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), returnNt, getNt(statemNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), forNt, getNt(statemNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), ifElseNt, getNt(statemNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), ifNt, getNt(statemNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), blockNt, getNt(statemNt), reduceAct);
-
-	//Statement List
-	parsMachine.addThread(getNt(emptyNt), statemNt, getNt(statemListNt), reduceAct);
-	parsMachine.addThread(getNt(emptyNt), statemListNt, getNt(statemList1Nt), reduceAct);
-	addDefaultShifts(statemList1Nt);
-	parsMachine.addThread(getNt(statemList1Nt), statemNt, getNt(statemListNt), reduceAct);
-	parsMachine.addThread(getNt(statemListNt), endType, getNt(progNt), reduceAct);
+	parsM.addThread(nT(EMP), leftBrace, nT(B1), reduce);
+	parsM.addThread(nT(EMP), B1, nT(B2), reduce);
+	addShifts(B2);
+	parsM.addThread(nT(B2), SL, nT(B1), reduce);
+	parsM.addThread(nT(B1), rightBrace, nT(B), reduce);
+	addShifts(B);
+	parsM.addThread(nT(B), S, nT(B), reduce);
+	//StatemenT
+	parsM.addThread(nT(EMP), EX, nT(S), reduce);
+	parsM.addThread(nT(EMP), W, nT(S), reduce);
+	parsM.addThread(nT(EMP), R, nT(S), reduce);
+	parsM.addThread(nT(EMP), F, nT(S), reduce);
+	parsM.addThread(nT(EMP), IE, nT(S), reduce);
+	parsM.addThread(nT(EMP), IF, nT(S), reduce);
+	parsM.addThread(nT(EMP), B, nT(S), reduce);
+	//StatemenT List
+	parsM.addThread(nT(EMP), S, nT(SL), reduce);
+	parsM.addThread(nT(EMP), SL, nT(SL1), reduce);
+	addShifts(SL1);
+	parsM.addThread(nT(SL1), S, nT(SL), reduce);
+	parsM.addThread(nT(SL), endT, nT(PR), reduce);
 }
-void addDefaultShifts(int nt){
-	parsMachine.addThread(getNt(nt), numbType, getNt(emptyNt), shiftAct);
-	parsMachine.addThread(getNt(nt), idType, getNt(emptyNt), shiftAct);
-	parsMachine.addThread(getNt(nt), returnRes, getNt(emptyNt), shiftAct);
-	parsMachine.addThread(getNt(nt), withRes, getNt(emptyNt), shiftAct);
-	parsMachine.addThread(getNt(nt), forRes, getNt(emptyNt), shiftAct);
-	parsMachine.addThread(getNt(nt), ifRes, getNt(emptyNt), shiftAct);
-	parsMachine.addThread(getNt(nt), leftBrace, getNt(emptyNt), shiftAct);
+void addShifts(int nt){
+	parsM.addThread(nT(nt), numbT, nT(EMP), shift);
+	parsM.addThread(nT(nt), idT, nT(EMP), shift);
+	parsM.addThread(nT(nt), returnR, nT(EMP), shift);
+	parsM.addThread(nT(nt), withR, nT(EMP), shift);
+	parsM.addThread(nT(nt), forR, nT(EMP), shift);
+	parsM.addThread(nT(nt), ifR, nT(EMP), shift);
+	parsM.addThread(nT(nt), leftBrace, nT(EMP), shift);
 }
-string getNameNt(int nt){
-	switch(nt + emptyNt){
-		case emptyNt:
-			return "emptyNt";
-		case exprNt:
-			return "exprNt";
-		case eqExNt:
-			return "eqExNt";
-		case idNt:
-			return "idNt";
+string printNameNt(int nt){
+	switch(nt + EMP){
+		case EMP:
+			return "EMP";
+		case EX:
+			return "EX";
+		case EQ:
+			return "EQ";
+		case ID:
+			return "ID";
 
-		case bitAndExNt:
-			return "bitAndExNt";
-		case bitAndEx1Nt:
-			return "bitAndEx1Nt";
+		case BaEX:
+			return "BaEX";
+		case BaEX1:
+			return "BaEX1";
+		case BoEX:
+			return "BoEX";
+		case BoEX1:
+			return "BoEX1";
 
-		case bitOrExNt:
-			return "bitOrExNt";
-		case bitOrEx1Nt:
-			return "bitOrEx1Nt";
+		case LoEX:
+			return "LoEX";
+		case LoEX1:
+			return "LoEX1";
+		case LaEX:
+			return "LaEX";
+		case LaEX1:
+			return "LaEX1";
 
-		case logOrExNt:
-			return "logOrExNt";
-		case logOrEx1Nt:
-			return "logOrEx1Nt";
+		case AEX:
+			return "AEX";
 
-		case logAndExNt:
-			return "logAndExNt";
-		case logAndEx1Nt:
-			return "logAndEx1Nt";
+		case B:
+			return "B";
+		case B1:
+			return "B1";
+		case B2:
+			return "B2";
 
-		case assignOpNt:
-			return "assignOpNt";
-		case assignExNt:
-			return "assignExNt";
+		case F:
+			return "F";
+		case F1:
+			return "F1";
+		case F2:
+			return "F2";
+		case F3:
+			return "F3";
 
-		case blockNt:
-			return "blockNt";
-		case block1Nt:
-			return "block1Nt";
-		case block2Nt:
-			return "block2Nt";
+		case W:
+			return "W";
+		case W1:
+			return "W1";
+		case W2:
+			return "W2";
+		case W3:
+			return "W3";
 
-		case forNt:
-			return "forNt";
-		case for1Nt:
-			return "for1Nt";
-		case for2Nt:
-			return "for2Nt";
-		case for3Nt:
-			return "for3Nt";
+		case IF:
+			return "IF";
+		case IF1:
+			return "IF1";
+		case IF2:
+			return "IF2";
+		case IE:
+			return "IE";	
+		case IE1:
+			return "IE1";
 
-		case withNt:
-			return "withNt";
-		case with1Nt:
-			return "with1Nt";
-		case with2Nt:
-			return "with2Nt";
-		case with3Nt:
-			return "with3Nt";
+		case R:
+			return "R";
+		case R1:
+			return "R1";
+		case R2:
+			return "R2";
 
-		case returnNt:
-			return "returnNt";
-		case return1Nt:
-			return "return1Nt";
-		case return2Nt:
-			return "return2Nt";
-
-		case statemNt:
-			return "statemNt";
-		case statemListNt:
-			return "statemListNt";
-		case statemList1Nt:
-			return "statemList1Nt";
-		case progNt:
-			return "progNt";
+		case S:
+			return "S";
+		case SL:
+			return "SL";
+		case SL1:
+			return "SL1";
+		case PR:
+			return "PR";
 		default:
 			return to_string(nt);
 	}
 }
 int parseLex(LexAttr lex, stack<int>& buf, ofstream& fout){
-	int act, nextAct, tokenType = lex.tokType, last = buf.top(), next = parseNt(last, tokenType, act);
+	int act, nextAct, tokenT = lex.tokType;
+	int last = buf.top(), next = parseNt(last, tokenT, act);
 	switch(act) {
-		case reduceAct: {
+		case reduce: {
 				reduceNext(buf, next, fout);
 				reduceLast(buf, nextAct, last, fout);
 		}
 		break;
-		case shiftAct: {
-			next = parseNt(getNt(emptyNt), tokenType, nextAct);
-			if(nextAct == reduceAct) {
-				fout<<"push (next)\t"<<getNameNt(next)<<endl;
+		case shift: {
+			next = parseNt(nT(EMP), tokenT, nextAct);
+			if(nextAct == reduce) {
+				fout<<"leaf:\t"<<printNameNt(next)<<endl;
 				buf.push(next);
 			} else
 				return -1;
 		}
 		break;
-		case wrongAct: {
+		case wrong: {
 			if(reduceLast(buf, nextAct, last, fout))
 				return parseLex(lex, buf, fout);
-			next = parseNt(getNt(emptyNt), last + emptyNt, nextAct);
-      if(nextAct == reduceAct) {
+			next = parseNt(nT(EMP), last + EMP, nextAct);
+      if(nextAct == reduce) {
       	reduceNext(buf, next, fout);
       	return parseLex(lex, buf, fout);
-      } else {
+      } else
       	return -1;
-      }
     }
 	}
 	return 0;
 }
+
 void reduceNext(stack<int>& buf, int next, ofstream& fout){
-    fout<<"pop (top)\t"<<getNameNt(buf.top())<<"\t push (next)\t"<<getNameNt(next)<<endl;
+    fout<<"node with 1 branch:\t"<<printNameNt(buf.top())<<"\t"<<printNameNt(next)<<endl;
     buf.pop();
     buf.push(next);
 }
-
 int reduceLast(stack<int> &buf, int nextAct, int last, ofstream& fout){
 	if(buf.size()>=2) {
         last = buf.top();
         buf.pop();
-        int preLast = buf.top();
-				int newNext = parseNt(preLast ,last + emptyNt, nextAct);
-        if(nextAct == reduceAct) {
-            fout<<"pop (preLast)\t"<<getNameNt(preLast)<<"\t pop (last)\t"<<getNameNt(last)<<",\t push \t"<<getNameNt(newNext)<<endl;
+        int preLast = buf.top(), newNext = parseNt(preLast ,last + EMP, nextAct);
+        if(nextAct == reduce) {
+            fout<<"node with 2 branch:\t"<<printNameNt(preLast)<<"\t"<<printNameNt(last)<<"\t"<<printNameNt(newNext)<<endl;
             buf.pop();
             buf.push(newNext);
             return 1;
@@ -266,37 +267,48 @@ int reduceLast(stack<int> &buf, int nextAct, int last, ofstream& fout){
     }
     return 0;
 }
-int parseNt(int last, int nt, int& act){
-  StateAct  stateAct = parsMachine.changeSt[last][nt];
+int parseNt(int last, int nT, int& act){
+  StateAct  stateAct = parsM.changeSt[last][nT];
   act = stateAct.act;
   return stateAct.next;
 }
-int getNt(int type){
-	return type - emptyNt;
+int nT(int nt){
+	return nt - EMP;
 }
 int parser(vector<LexAttr> &recLexs){
 	stack<int> buf;
 	string token;
-	vector<LexAttr>::iterator it;
 	initParsMachine();
-	buf.push(getNt(emptyNt));
-	recLexs.push_back(LexAttr(0,"",endType, endSt));
+	buf.push(nT(EMP));
+	recLexs.push_back(LexAttr(0,"",endT, endSt));
 	//Print Parser result in Log-File
 	ofstream fout("parserTable.log");
-	fout << "#################################\n####      PARSER  TABLE      ####\n#################################\n" << endl;
-	fout.close();
+	fout << "#######################################" << endl;
+	fout << "#######      PRINTED  TREE      #######" << endl;
+	fout << "#######################################\n" << endl;
 	//Print Syntax Error's
-	cout << "###################\n#####  Parser #####\n###################" << endl;
-  for(it = recLexs.begin();it!=recLexs.end();it++) {
+	cout << "#######################################" << endl;
+	cout << "#########       PARSER        #########" << endl;
+	cout << "#######################################" << endl;
+  for(vector<LexAttr>::iterator it = recLexs.begin(); it!=recLexs.end(); it++) {
 		if(parseLex(*it, buf, fout)<0) {
-			cout << "Syntax error:\t(Line	" << it->numstr << ")\tInvalid token:\t" << it->token << endl;
+			cout << "Syntax error:\t(Line	" <<it->numstr<< ") Invalid token: " <<it->token<<endl;
+			if(printNameNt(buf.top())== "W2" || printNameNt(buf.top())== "F3" || printNameNt(buf.top())== "IF2") 
+				cout << "May be expected ')'\n"; 
+			if(printNameNt(buf.top())== "B2" || printNameNt(buf.top())== "PR") 
+				cout << "May be expected '}'\n"; 
 			break;
 		}
   }
-	if (buf.size() == 1 && buf.top() == getNt(progNt))
+	if (buf.size() == 1 && buf.top() == nT(PR))
 		cout << "Not find Syntax error's" << endl;
-	else
-		cout << "###################\nSyntax error:\tBuffer size: " << buf.size() <<"\tTop element from buffer: "<< getNameNt(buf.top()) << endl;
-	cout << "###################" << endl;
+	else {
+		cout << "#######################################" << endl;
+		cout << "Syntax error:\tBuffer size:\t" << buf.size() << endl;
+		cout << "Top element in buffer: "<< printNameNt(buf.top()) << endl;
+		cout << "Check parserTable.log" << endl;
+	}
+	cout << "#######################################" << endl;
+	fout.close();
 	return 0;
 }

@@ -8,8 +8,8 @@
 using namespace std;
 
 enum States {
-  endSt,        wrongSt,     emptySt, numberSt, logicSt,   // && ||   
-  assignmentSt, separatorSt, dotSt,   arifmSt,  bitwiseSt, // & |
+  endSt,        wrongSt,     empSt, numbSt,  logicSt,   // && ||   
+  assignmentSt, separatorSt, dotSt, arifmSt, bitwiseSt, // & |
   wordSt,       countStates
 };
 enum SymbolType {
@@ -20,7 +20,7 @@ enum SymbolType {
   arifm,      // * / + -
   separator,  // ; ( ) { } \n
   wrongSymb,  // # 
-  dot, countSymbolType
+  dot,  countSymbolType
 };
 struct Symbol {
   Symbol(char ch);
@@ -28,10 +28,10 @@ struct Symbol {
   SymbolType type;
 };
 enum tokenType {
-  spaceType,  idType,      numbType,  assignType,
-  logicType,  bitwiseType, arifmType, wrongType,  endType,
+  spaceT,  idT,      numbT,  assignT,
+  logicT,  bitwiseT, arifmT, wrongT,  endT,
   //Res Words
-  ifRes,    elseRes,   forRes,  withRes,  returnRes, inRes,
+  ifR,    elseR,   forR,  withR,  returnR, inR,
   //Bitwise Opretators
   bit1, //&
   bit2, //|
@@ -39,30 +39,30 @@ enum tokenType {
   log1, //&&
   log2, //||
   //Separators
-  semiCol,      // ;
-  leftParent,   // (
-  rightParent,  // )
+  semiCol,   // ;
+  leftPar,   // (
+  rightPar,  // )
   leftBrace,    // {
   rightBrace,   // }
   //countTokenTypes,
   //Non Terms:  (For Parser)
-  emptyNt,    exprNt,       eqExNt,   idNt, 
-  logOrExNt,  logOrEx1Nt,
-  logAndExNt, logAndEx1Nt,
-  bitOrExNt,  bitOrEx1Nt,
-  bitAndExNt, bitAndEx1Nt,
-  assignOpNt, assignExNt,   assgnOpNt,
+  EMP,  EQ, ID,
+  EX,   AEX,
+  BoEX, BoEX1,
+  BaEX, BaEX1,
+  LoEX, LoEX1,
+  LaEX, LaEX1, 
 
-  withNt,     with1Nt,      with2Nt,  with3Nt,
-  returnNt,   return1Nt,    return2Nt,
-  forNt,      for1Nt,       for2Nt,   for3Nt,
+  W,  W1, W2, W3,
+  R,  R1, R2, R3,
+  F,  F1, F2, F3,
 
-  ifNt,       if1Nt,        if2Nt,
-  ifElseNt,   ifElse1Nt,
+  IF, IF1,  IF2,  IF3,  IF4,
+  IE, IE1,
   
-  blockNt,    block1Nt,     block2Nt,
-  statemNt,   statemListNt, statemList1Nt,
-  wrongNt,    progNt,       countNonTerms
+  B,  B1, B2,
+  S,  SL, SL1,
+  WR, PR, countNT
 };
 struct ResWord {
   ResWord(string word, tokenType key);
@@ -71,8 +71,8 @@ struct ResWord {
 };
 enum Act{
   idle,       endAct,
-  shiftAct,   reduceAct,
-  wrongAct
+  shift,   reduce,
+  wrong
 };
 struct LexAttr{
   LexAttr(int numstr,string token, int tokType, char state);
@@ -106,9 +106,9 @@ int classifier(string str, char state, vector<LexAttr> &recLexs);
 int parseNt(int last, int nt, int& act);
 void reduceNext(stack<int>& buf, int next,ofstream& fout);
 int reduceLast(stack<int>&buf, int nextAct, int last, ofstream& fout);
-void addDefaultShifts(int nt);
+void addShifts(int nt);
 void initParsMachine();
-string getNameNt(int nt);
+string printNameNt(int nt);
 int parser(vector<LexAttr> &recLexs);
-int getNt(int type);
+int nT(int type);
 int parseLex(LexAttr lex, stack<int>& buf, ofstream& fout);
