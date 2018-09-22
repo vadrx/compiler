@@ -1,8 +1,8 @@
-#include "main.hpp"
+#include "main.h"
 Symbol::Symbol(char c) {
     ch = c;
     static map<char,SymbolType> def = {
-        {'.',dot},       {'=',assignment}, 
+        {'.',dot},       {'=',assignment},
         {'&',bitwise},   {'|',bitwise},
         {'*',arifm},     {'/',arifm},      {'+',arifm},     {'-',arifm},
         {'}',separator}, {'(',separator},  {')',separator}, {'{',separator},
@@ -42,12 +42,12 @@ int findResWord(string word){
     return 0;
 }
 StateAct::StateAct(){
-   this->next = empSt;
-   this->act = endAct;
+    this->next = empSt;
+    this->act = endAct;
 }
 StateAct::StateAct(int next, Act act){
-   this->next = next;
-   this->act = act;
+    this->next = next;
+    this->act = act;
 }
 StateMachine::StateMachine(int stateNum,int symbNum, Act act){
     this->stateNum = stateNum;
@@ -57,7 +57,7 @@ StateMachine::StateMachine(int stateNum,int symbNum, Act act){
         changeSt[i] = new StateAct[symbNum];
         for (int j = 0; j < symbNum; j++)
             changeSt[i][j].act = act;
-    }      
+    }
 }
 LexAttr::LexAttr(int numstr,string token,int tokType, char state){
     this->numstr = numstr;
@@ -96,68 +96,68 @@ void printLexTable(vector<LexAttr> &recLexs){
         switch(it->tokType){
         case ifR:
             msg = "Res Word  ";
-        break;
+            break;
         case elseR:
             msg = "Res Word  ";
-        break;
+            break;
         case forR:
             msg = "Res Word  ";
-        break;
+            break;
         case withR:
             msg = "Res Word  ";
-        break;
+            break;
         case returnR:
             msg = "Res Word  ";
-        break;
+            break;
         case inR:
             msg = "Res Word  ";
-        break;
+            break;
         case endT:
-        break;
+            break;
         case spaceT:
-        break;
+            break;
         case idT:
             msg = "Identifier";
-        break;
+            break;
         case leftPar:
             msg = "Separator ";
-        break;
+            break;
         case rightPar:
             msg = "Separator ";
-        break;
+            break;
         case leftBrace:
             msg = "Separator ";
-        break;
+            break;
         case rightBrace:
             msg = "Separator ";
-        break;
+            break;
         case semiCol:
             msg = "Separator ";
-        break;
+            break;
         case numbT:
             msg = "Number    ";
-        break;
+            break;
         case assignT:
             msg = "Assignment";
-        break;
+            break;
         case log1:
             msg = "Logic     ";
-        break;
+            break;
         case log2:
             msg = "Logic     ";
-        break;
+            break;
         case bit1:
             msg = "Bitwise   ";
-        break;
+            break;
         case bit2:
             msg = "Bitwise   ";
-        break;
+            break;
         case arifmT:
             msg = "Arifm     ";
-        break;
+            break;
         case wrongT:
             msg = "Wrong     ";
-        break;
+            break;
         }
         preIt = (it!=recLexs.begin()) ? it - 1 : it;
         if (preIt->numstr != it->numstr)
@@ -170,94 +170,94 @@ void printLexTable(vector<LexAttr> &recLexs){
 }
 int classifier(string str, char state, vector<LexAttr> &recLexs){
     switch(state) {
-        case wordSt : {
-            int key = findResWord(str);
-            if(key > 0){
-                recLexs.push_back(LexAttr(lexM.numstr, str, key, key));
-                return key;
-            } else {
-                recLexs.push_back(LexAttr(lexM.numstr, str, idT, wordSt));
-                return idT;
-            }
+    case wordSt : {
+        int key = findResWord(str);
+        if(key > 0){
+            recLexs.push_back(LexAttr(lexM.numstr, str, key, key));
+            return key;
+        } else {
+            recLexs.push_back(LexAttr(lexM.numstr, str, idT, wordSt));
+            return idT;
         }
+    }
         break;
-        case separatorSt: {
-            if(str == " "){
-                return spaceT;
-            }
-            if (str == "\n"){
-                lexM.numstr++;
-                return endT;
-            }
-            if(str == "("){
-                recLexs.push_back(LexAttr(lexM.numstr, str, leftPar, separatorSt));
-                return leftPar;
-            }
-            if(str == ")"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, rightPar, separatorSt));
-                return rightPar;
-            }
-            if(str == "{"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, leftBrace, separatorSt));
-                return leftBrace;
-            }
-            if(str == "}"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, rightBrace, separatorSt));
-                return rightBrace;
-            }
-            if(str == ";"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, semiCol, separatorSt));
-                return semiCol;
-            }
+    case separatorSt: {
+        if(str == " "){
+            return spaceT;
         }
+        if (str == "\n"){
+            lexM.numstr++;
+            return endT;
+        }
+        if(str == "("){
+            recLexs.push_back(LexAttr(lexM.numstr, str, leftPar, separatorSt));
+            return leftPar;
+        }
+        if(str == ")"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, rightPar, separatorSt));
+            return rightPar;
+        }
+        if(str == "{"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, leftBrace, separatorSt));
+            return leftBrace;
+        }
+        if(str == "}"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, rightBrace, separatorSt));
+            return rightBrace;
+        }
+        if(str == ";"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, semiCol, separatorSt));
+            return semiCol;
+        }
+    }
         break;
-        case numbSt: {
-            recLexs.push_back(LexAttr(lexM.numstr, str, numbT, numbSt));
-            return numbT;
-        }
+    case numbSt: {
+        recLexs.push_back(LexAttr(lexM.numstr, str, numbT, numbSt));
+        return numbT;
+    }
         break;
-        case assignmentSt:{
-            recLexs.push_back(LexAttr(lexM.numstr, str, assignT, assignmentSt));
-            return assignT;
-        }
+    case assignmentSt:{
+        recLexs.push_back(LexAttr(lexM.numstr, str, assignT, assignmentSt));
+        return assignT;
+    }
         break;
-        case logicSt: {
-            if(str == "&&"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, log1, logicSt));
-                return log1;
-            }
-            if(str == "||"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, log2, logicSt));
-                return log2;
-            }
+    case logicSt: {
+        if(str == "&&"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, log1, logicSt));
+            return log1;
         }
+        if(str == "||"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, log2, logicSt));
+            return log2;
+        }
+    }
         break;
-        case bitwiseSt: {
-            if(str == "&"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, bit1, bitwiseSt));
-                return bit1;
-            }
-            if(str == "|"){
-                recLexs.push_back(LexAttr(lexM.numstr, str, bit2, bitwiseSt));
-                return bit2;
-            }
-            
+    case bitwiseSt: {
+        if(str == "&"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, bit1, bitwiseSt));
+            return bit1;
         }
+        if(str == "|"){
+            recLexs.push_back(LexAttr(lexM.numstr, str, bit2, bitwiseSt));
+            return bit2;
+        }
+
+    }
         break;
-        case arifmSt: {
-            recLexs.push_back(LexAttr(lexM.numstr, str, arifmT, arifmSt));
-            return arifmT;
-        }
+    case arifmSt: {
+        recLexs.push_back(LexAttr(lexM.numstr, str, arifmT, arifmSt));
+        return arifmT;
+    }
         break;
-        case dotSt: { 
-            recLexs.push_back(LexAttr(lexM.numstr, str, wrongT, dotSt));
-            return wrongT;
-        }
+    case dotSt: {
+        recLexs.push_back(LexAttr(lexM.numstr, str, wrongT, dotSt));
+        return wrongT;
+    }
         break;
-        case wrongSt: {
-            recLexs.push_back(LexAttr(lexM.numstr, str, wrongT, wrongSt));
-            return wrongT;
-        }
+    case wrongSt: {
+        recLexs.push_back(LexAttr(lexM.numstr, str, wrongT, wrongSt));
+        return wrongT;
+    }
         break;
     }
     return wrongT;
@@ -275,19 +275,19 @@ int transletter(Symbol& symb, vector<LexAttr> &recLexs){
     static string buff;
     StateAct  stateAct = lexM.changeSt[currState][symb.type];
     switch(stateAct.act){
-        case idle:
+    case idle:
         break;
-        case endAct: {
-            classifier(buff,currState, recLexs);
-            buff.clear();
-            currState = stateAct.next;
-            transletter(symb, recLexs);
-            return 0;
-        }
+    case endAct: {
+        classifier(buff,currState, recLexs);
+        buff.clear();
+        currState = stateAct.next;
+        transletter(symb, recLexs);
+        return 0;
+    }
         break;
-        default: {
-          return stateAct.next;
-      }
+    default: {
+        return stateAct.next;
+    }
     }
     buff += symb.ch;
     currState = stateAct.next;

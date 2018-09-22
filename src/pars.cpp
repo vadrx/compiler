@@ -1,4 +1,4 @@
-#include "main.hpp"
+#include "main.h"
 
 StateMachine parsM(nT(countNT),countNT, wrong);
 void initParsMachine(){
