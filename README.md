@@ -19,6 +19,7 @@ mkdir build
 cd build
 cmake ..
 make
+```
 
 <h2> Running: </h2>
 
